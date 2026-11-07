@@ -1,0 +1,11 @@
+# Local tracing backend. Start with:  docker compose up -d
+# Then run the app with OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 and open http://localhost:16686
+services:
+  jaeger:
+    # Jaeger v2 all-in-one: OTLP receivers on 4317 (gRPC) / 4318 (HTTP), UI on 16686.
+    # Bump to the latest 2.x tag when you like.
+    image: jaegertracing/jaeger:2.0.0
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"

@@ -1,0 +1,116 @@
+{
+  "_comment": "Synthetic telemetry snapshot taken at alert time. Logs are pre-aggregated by message signature, the way a log query engine groups them. Edit freely or add services to create new scenarios.",
+  "services": {
+    "checkout-service": {
+      "owner": "team-checkout",
+      "metrics": {
+        "p99_latency_ms": { "baseline": 420, "current": 2350 },
+        "error_rate_pct": { "baseline": 0.2, "current": 1.8 },
+        "requests_per_sec": { "baseline": 850, "current": 790 }
+      },
+      "logs": [
+        { "level": "ERROR", "message": "HikariPool-1 - Connection is not available, request timed out after 30000ms", "count": 412 },
+        { "level": "WARN", "message": "Slow query on cart_items took 1850ms", "count": 96 },
+        { "level": "INFO", "message": "GET /healthz 200", "count": 1200 }
+      ],
+      "deploys": [
+        { "version": "v2.14.0", "minutes_before_alert": 12, "author": "ci-bot", "summary": "Reduce DB connection pool max size from 50 to 10; refactor cart pricing" },
+        { "version": "v2.13.2", "minutes_before_alert": 2880, "author": "ci-bot", "summary": "Fix currency rounding in receipts" }
+      ]
+    },
+    "payments-api": {
+      "owner": "team-payments",
+      "metrics": {
+        "p99_latency_ms": { "baseline": 300, "current": 5100 },
+        "error_rate_pct": { "baseline": 0.1, "current": 12.4 },
+        "requests_per_sec": { "baseline": 400, "current": 410 }
+      },
+      "logs": [
+        { "level": "ERROR", "message": "Upstream timeout calling bank-gateway after 5000ms", "count": 1840 },
+        { "level": "ERROR", "message": "Circuit breaker OPEN for bank-gateway", "count": 230 },
+        { "level": "WARN", "message": "Retrying charge request (attempt 3 of 3)", "count": 610 }
+      ],
+      "deploys": [
+        { "version": "v8.3.1", "minutes_before_alert": 4320, "author": "ci-bot", "summary": "Add idempotency keys to refunds" }
+      ]
+    },
+    "auth-service": {
+      "owner": "team-identity",
+      "metrics": {
+        "p99_latency_ms": { "baseline": 120, "current": 140 },
+        "error_rate_pct": { "baseline": 0.05, "current": 38.0 },
+        "requests_per_sec": { "baseline": 2200, "current": 2150 }
+      },
+      "logs": [
+        { "level": "ERROR", "message": "x509: certificate has expired or is not yet valid (CN=auth-internal.example.com expired 2026-11-04T14:00:00Z)", "count": 5200 },
+        { "level": "WARN", "message": "Token refresh failed for client mobile-app", "count": 880 }
+      ],
+      "deploys": [
+        { "version": "v3.9.0", "minutes_before_alert": 10080, "author": "ci-bot", "summary": "Upgrade OAuth library" }
+      ]
+    },
+    "search-service": {
+      "owner": "team-discovery",
+      "metrics": {
+        "p99_latency_ms": { "baseline": 180, "current": 310 },
+        "error_rate_pct": { "baseline": 0.3, "current": 0.6 },
+        "requests_per_sec": { "baseline": 1500, "current": 1480 }
+      },
+      "logs": [
+        { "level": "ERROR", "message": "java.lang.OutOfMemoryError: Java heap space", "count": 14 },
+        { "level": "WARN", "message": "GC pause (G1 Evacuation Pause) 2300ms", "count": 310 },
+        { "level": "WARN", "message": "Pod search-7f9c restarted (OOMKilled)", "count": 6 }
+      ],
+      "deploys": [
+        { "version": "v12.0.4", "minutes_before_alert": 4300, "author": "ci-bot", "summary": "Increase in-memory result cache to 2GB" }
+      ]
+    },
+    "inventory-service": {
+      "owner": "team-fulfillment",
+      "metrics": {
+        "p99_latency_ms": { "baseline": 250, "current": 270 },
+        "error_rate_pct": { "baseline": 0.4, "current": 3.2 },
+        "requests_per_sec": { "baseline": 300, "current": 298 }
+      },
+      "logs": [
+        { "level": "ERROR", "message": "NullPointerException at StockReconciler.reconcile(StockReconciler.java:88)", "count": 960 },
+        { "level": "WARN", "message": "Reconciliation batch skipped for warehouse WH-12", "count": 140 }
+      ],
+      "deploys": [
+        { "version": "v5.2.0", "minutes_before_alert": 25, "author": "ci-bot", "summary": "New stock reconciliation for multi-warehouse orders" },
+        { "version": "v5.1.9", "minutes_before_alert": 1500, "author": "ci-bot", "summary": "Dependency bumps" }
+      ]
+    },
+    "notifications-service": {
+      "owner": "team-messaging",
+      "metrics": {
+        "p99_latency_ms": { "baseline": 200, "current": 210 },
+        "error_rate_pct": { "baseline": 0.1, "current": 0.12 },
+        "requests_per_sec": { "baseline": 120, "current": 118 }
+      },
+      "logs": [
+        { "level": "WARN", "message": "Retrying SMTP send (attempt 2)", "count": 12 },
+        { "level": "INFO", "message": "Email batch dispatched", "count": 340 }
+      ],
+      "deploys": [
+        { "version": "v1.18.0", "minutes_before_alert": 1440, "author": "ci-bot", "summary": "Template copy updates" }
+      ]
+    },
+    "orders-service": {
+      "owner": "team-orders",
+      "metrics": {
+        "p99_latency_ms": { "baseline": 350, "current": 1900 },
+        "error_rate_pct": { "baseline": 0.2, "current": 2.6 },
+        "requests_per_sec": { "baseline": 640, "current": 600 }
+      },
+      "logs": [
+        { "level": "ERROR", "message": "HikariPool-2 - Connection is not available, request timed out after 30000ms", "count": 690 },
+        { "level": "WARN", "message": "Slow query on order_lines took 2400ms", "count": 75 },
+        { "level": "WARN", "message": "Long-running transaction held a DB connection for 95s (job=nightly-export)", "count": 40 }
+      ],
+      "deploys": [
+        { "version": "v4.7.3", "minutes_before_alert": 150, "author": "ci-bot", "summary": "Update log format; README fixes" }
+      ]
+    }
+  }
+}

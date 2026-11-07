@@ -1,0 +1,79 @@
+{
+  "runbooks": [
+    {
+      "id": "RB-101",
+      "title": "Roll back a bad deploy",
+      "keywords": ["deploy", "regression", "rollback", "release", "bad deploy"],
+      "steps": [
+        "Freeze further deploys to the service",
+        "Roll back to the previous version",
+        "Confirm error rate and p99 latency return to baseline",
+        "Open a post-incident review for the change"
+      ]
+    },
+    {
+      "id": "RB-201",
+      "title": "Database connection pool exhaustion",
+      "keywords": ["connection pool", "hikari", "database connection", "pool exhaustion", "db connections"],
+      "steps": [
+        "Compare active vs. max connections on the pool dashboard",
+        "Find long-running transactions or batch jobs holding connections",
+        "Stop or reschedule the offending job; raise pool size temporarily only if the database has headroom",
+        "Add a statement timeout to prevent recurrence"
+      ]
+    },
+    {
+      "id": "RB-301",
+      "title": "Upstream dependency outage",
+      "keywords": ["upstream", "dependency", "timeout", "circuit breaker", "gateway"],
+      "steps": [
+        "Check the dependency's status page and contact its on-call",
+        "Verify circuit breakers are open and requests fail fast",
+        "Enable degraded mode or queue requests for retry",
+        "Post a customer-impact update"
+      ]
+    },
+    {
+      "id": "RB-401",
+      "title": "Expired TLS certificate",
+      "keywords": ["certificate", "tls", "x509", "cert", "expired"],
+      "steps": [
+        "Identify the expired certificate (CN and where it is mounted)",
+        "Rotate the certificate from the secrets manager",
+        "Reload or restart the affected pods",
+        "Add expiry alerting 30 days ahead"
+      ]
+    },
+    {
+      "id": "RB-501",
+      "title": "Memory pressure / OutOfMemoryError",
+      "keywords": ["memory", "heap", "gc", "oom", "outofmemory"],
+      "steps": [
+        "Check heap usage and GC pause dashboards",
+        "Capture a heap dump from an affected pod",
+        "Revert recent memory-related config changes or raise memory limits temporarily",
+        "Restart pods in a rolling fashion"
+      ]
+    },
+    {
+      "id": "RB-901",
+      "title": "No anomaly / alert noise",
+      "keywords": ["no anomaly", "noise", "false positive", "flapping", "normal"],
+      "steps": [
+        "Compare metrics with the last 24h baseline",
+        "Check whether the alert threshold is too sensitive",
+        "Tune or silence the alert; no customer impact expected"
+      ]
+    },
+    {
+      "id": "RB-902",
+      "title": "Service not found / missing telemetry",
+      "keywords": ["no telemetry", "unknown service", "no data", "not found"],
+      "steps": [
+        "Verify the service name and owner in the service catalog",
+        "Check that the service is emitting logs and metrics",
+        "Escalate to the owning team if customer impact is confirmed"
+      ]
+    }
+  ]
+}
